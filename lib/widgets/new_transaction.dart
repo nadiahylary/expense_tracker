@@ -1,11 +1,33 @@
 import 'package:flutter/material.dart';
 
-
-class NewTransaction extends StatelessWidget {
+class NewTransaction extends StatefulWidget {
   NewTransaction(this.addHandler, {super.key});
+
   final Function addHandler;
+
+  @override
+  State<NewTransaction> createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
   final titleController = TextEditingController();
+
   final amountController = TextEditingController();
+
+  void submittedTrans() {
+    print('in submittedTrans');
+    final inputTitle = titleController.text;
+    final inputAmt = double.parse(amountController.text);
+
+    if (inputTitle.isEmpty || inputAmt <= 0) {
+      print('errr');
+      return;
+    }
+
+    widget.addHandler(
+        titleController.text, double.parse(amountController.text));
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,24 +42,29 @@ class NewTransaction extends StatelessWidget {
               TextField(
                 decoration: InputDecoration(labelText: 'Expense motif'),
                 controller: titleController,
+                onSubmitted: (_) => submittedTrans(),
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               TextField(
-                decoration:
-                InputDecoration(labelText: 'Amount of the expense'),
+                decoration: InputDecoration(labelText: 'Amount of the expense'),
                 controller: amountController,
+                keyboardType: TextInputType.number,
+                //numberWithOptions(decimal: true), if building for iOS too
+                onSubmitted: (_) => submittedTrans(),
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               ElevatedButton(
-                onPressed: (){
-                  addHandler(titleController.text, amountController.text);
-                },
-                child: Text('Add Expense'),
+                onPressed: submittedTrans,
+                child: Text(
+                  'Add Expense',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepOrangeAccent,
-                    foregroundColor: Colors.black,
+                    //backgroundColor: Colors.deepOrangeAccent,
+                    //foregroundColor: Colors.black,
                     textStyle: TextStyle(fontWeight: FontWeight.w500)),
               ),
-            ]
-        ),
+            ]),
       ),
     );
   }

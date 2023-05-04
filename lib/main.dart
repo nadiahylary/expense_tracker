@@ -1,7 +1,6 @@
 import 'package:expense_tracker/models/transaction.dart';
 import 'package:expense_tracker/widgets/new_transaction.dart';
 import 'package:expense_tracker/widgets/transactions_list.dart';
-import 'package:expense_tracker/widgets/user_transactions.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,53 +15,126 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Personal Expense Tracker',
       theme: ThemeData(
-        primarySwatch: Colors.brown,
-        //colorScheme: ColorScheme.dark(),
-      ),
-      home: MyHomePage(),
+          primarySwatch: Colors.brown,
+          fontFamily: 'Ubuntu',
+          textTheme: ThemeData.dark().textTheme.copyWith(
+                titleLarge: TextStyle(
+                  fontFamily: 'Ubuntu',
+                  fontWeight: FontWeight.normal,
+                  fontSize: 20,
+                ),
+                bodyLarge: TextStyle(
+                  fontFamily: 'Ubuntu',
+                  fontWeight: FontWeight.bold,
+                  color: Colors.deepOrangeAccent,
+                  fontSize: 18,
+                ),
+                bodyMedium: TextStyle(
+                  fontFamily: 'Ubuntu',
+                  fontWeight: FontWeight.normal,
+                  color: Colors.teal,
+                  fontSize: 18,
+                ),
+              ),
+          appBarTheme: const AppBarTheme(
+              titleTextStyle: TextStyle(
+                  fontFamily: 'Ubuntu',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold))
+          //colorScheme: ColorScheme.dark(),
+          ),
+      home: const MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
 
-  /*late String titleinput;
-  late String amountInput;*/
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
 
-  /*MyHomePage({super.key,
-    this.titleinput = titleinput,
-    this.amountInput = amountInput}
-  );*/
+class _MyHomePageState extends State<MyHomePage> {
+  final List<Transaction> _userTransactions = [
+    /*Transaction(
+        id: "#NT2",
+        title: "Gym Trimester Membership",
+        amount: 64.60,
+        date: DateTime.now()),
+    Transaction(
+        id: "#NT3",
+        title: "Jim Rohn Books",
+        amount: 58.45,
+        date: DateTime.now()),*/
+  ];
 
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
+  void _addTransaction(String title, double amount) {
+    final Transaction transaction = Transaction(
+        id: DateTime.now().toString(),
+        title: title,
+        amount: amount,
+        date: DateTime.now());
+    setState(() {
+      _userTransactions.add(transaction);
+    });
+  }
 
+  void _deleteExpense(int index) {
+    setState(() {
+      _userTransactions.removeAt(index);
+    });
+  }
+
+  void _displayAddForm(BuildContext ctx) {
+    showModalBottomSheet(
+        context: ctx,
+        builder: (_) {
+          return NewTransaction(_addTransaction);
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Expense Tracker"),
+        title: const Text("Personal Expense Tracker"),
         backgroundColor: Colors.teal,
       ),
-      body: Column(
-        //mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Container(
-            width: double.infinity,
-            child: const Card(
-              elevation: 5,
-              color: Colors.deepOrangeAccent,
-              child: Text(
-                "Expenses Chart",
+      body: SingleChildScrollView(
+        child: Column(
+          //mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Container(
+              width: double.infinity,
+              height: 200,
+              child: const Card(
+                elevation: 5,
+                //color: Colors.deepOrangeAccent,
+                child: Text(
+                  "Expenses Chart",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                    color: Colors.brown,
+                  ),
+                ),
               ),
             ),
-          ),
-          UserTransactions(),
-        ],
+            TransactionList(_userTransactions, _deleteExpense),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _displayAddForm(context),
+        child: Icon(
+          Icons.add,
+          //color: Colors.deepOrangeAccent,
+          size: 35.0,
+        ),
       ),
     );
   }
