@@ -1,4 +1,5 @@
 import 'package:expense_tracker/models/transaction.dart';
+import 'package:expense_tracker/widgets/chart.dart';
 import 'package:expense_tracker/widgets/new_transaction.dart';
 import 'package:expense_tracker/widgets/transactions_list.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
                   fontFamily: 'Ubuntu',
                   fontWeight: FontWeight.normal,
                   fontSize: 20,
+                  
                 ),
                 bodyLarge: TextStyle(
                   fontFamily: 'Ubuntu',
@@ -71,6 +73,16 @@ class _MyHomePageState extends State<MyHomePage> {
         date: DateTime.now()),*/
   ];
 
+  List<Transaction> get _recentTransactions{
+    return _userTransactions.where((element) {
+      return element.date.isAfter(
+          DateTime.now().subtract(
+            const Duration(days: 7),
+          )
+      );
+    }).toList();
+  }
+
   void _addTransaction(String title, double amount) {
     final Transaction transaction = Transaction(
         id: DateTime.now().toString(),
@@ -108,22 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
           //mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              width: double.infinity,
-              height: 200,
-              child: const Card(
-                elevation: 5,
-                //color: Colors.deepOrangeAccent,
-                child: Text(
-                  "Expenses Chart",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18,
-                    color: Colors.brown,
-                  ),
-                ),
-              ),
-            ),
+            Chart(_recentTransactions),
             TransactionList(_userTransactions, _deleteExpense),
           ],
         ),
