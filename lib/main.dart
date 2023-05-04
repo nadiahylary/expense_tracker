@@ -25,7 +25,6 @@ class MyApp extends StatelessWidget {
                   fontFamily: 'Ubuntu',
                   fontWeight: FontWeight.normal,
                   fontSize: 20,
-                  
                 ),
                 bodyLarge: TextStyle(
                   fontFamily: 'Ubuntu',
@@ -73,13 +72,11 @@ class _MyHomePageState extends State<MyHomePage> {
         date: DateTime.now()),*/
   ];
 
-  List<Transaction> get _recentTransactions{
+  List<Transaction> get _recentTransactions {
     return _userTransactions.where((element) {
-      return element.date.isAfter(
-          DateTime.now().subtract(
-            const Duration(days: 7),
-          )
-      );
+      return element.date.isAfter(DateTime.now().subtract(
+        const Duration(days: 7),
+      ));
     }).toList();
   }
 

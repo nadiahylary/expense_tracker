@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:expense_tracker/models/transaction.dart';
+import 'package:expense_tracker/widgets/chart_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -26,20 +29,38 @@ class Chart extends StatelessWidget {
       };
     });
   }
+
+  double get _totalWeeklyExpenses{
+    return groupedTransactionValues.fold(0.0, (previousValue, element) {
+      return previousValue + double.parse(element['amount'].toString());
+    });
+
+  }
   
   @override
   Widget build(BuildContext context) {
     print(groupedTransactionValues);
     return Container(
           //width: double.infinity,
-          height: 200,
+          height: 250,
       child: Card(
         elevation: 5,
           margin: EdgeInsets.all(20),
-        child: Row(
-          children: groupedTransactionValues.map((e) {
-            return Text('${e['day']}: ${e['amount']}');
-          }).toList()
+        child: Container(
+          padding: EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: groupedTransactionValues.map((e) {
+              return Flexible(
+                fit: FlexFit.tight,
+                child: ChartBar(
+                    e['day'].toString(),
+                    double.parse(e['amount'].toString()),
+                    _totalWeeklyExpenses == 0.0 ? 0.0 : double.parse((e['amount'].toString()))/_totalWeeklyExpenses
+                ),
+              );
+            }).toList()
+          ),
         ),
       ),
     );
