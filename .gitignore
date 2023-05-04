@@ -44,3 +44,4 @@ app.*.map.json
 /android/app/release
 
 assets/fonts
+android/gradle/wrapper/gradle-8.1.1-bin.zip
