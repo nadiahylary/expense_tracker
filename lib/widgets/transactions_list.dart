@@ -17,23 +17,63 @@ class TransactionList extends StatelessWidget {
           ? Column(
               children: <Widget>[
                 Container(
-                    height: 200,
-                    margin: EdgeInsets.only(top: 30),
-                    child: Image.asset(
-                      "assets/images/empty-shopping-cart.png", //processing.gif",
-                      fit: BoxFit.cover,),
+                  height: 200,
+                  margin: EdgeInsets.only(top: 30),
+                  child: Image.asset(
+                    "assets/images/empty-shopping-cart.png", //processing.gif",
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 SizedBox(
                   height: 20,
                 ),
-                Text("You have no expenses yet.",
+                Text(
+                  "You have no expenses yet.",
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
             )
           : ListView.builder(
               itemBuilder: (ctx, index) {
-                return Container(
+                return ListTile(
+                  leading: CircleAvatar(
+                    radius: 10,
+                    child: Padding(
+                        padding: EdgeInsets.all(5),
+                        child: FittedBox(
+                            child: Text('\$${transactions[index].amount}'))),
+                  ),
+                  title: Text(
+                    transactions[index].title,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  subtitle: Text(DateFormat.yMMMd()
+                      .format(transactions[index].date),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w300,
+                        fontSize: 13,
+                        color: Colors.deepOrangeAccent,
+                      )
+                  ),
+                  trailing: IconButton(
+                    //color: Colors.deepOrangeAccent,
+                    onPressed: () => deleteExpense(index),
+                    icon: Icon(
+                      Icons.delete,
+                      color: Theme.of(context).primaryColorDark,
+                      size: 32.0,
+                    ),
+                  ),
+                );
+              },
+              itemCount: transactions.length,
+            ),
+    );
+  }
+}
+/*
+Alternative to ListTile
+Container(
                   width: double.infinity,
                   child: Card(
                     child: Row(
@@ -58,7 +98,6 @@ class TransactionList extends StatelessWidget {
                           ),
                           child: Text(
                             "\$${transactions[index].amount}", //.toStringAsFixed(2)
-                            //'\$'+ tx.amount.toString()
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 18,
@@ -107,13 +146,10 @@ class TransactionList extends StatelessWidget {
                     ),
                   ),
                 );
-              },
-              itemCount: transactions.length,
-            ),
-    );
-  }
-}
-/*child: ListView(
+ */
+/*
+Alternative to ListView.builder
+child: ListView(
           children: transactions.map((tx) {
             return Card(
               child: Row(
