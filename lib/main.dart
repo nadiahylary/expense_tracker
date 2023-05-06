@@ -18,34 +18,34 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Personal Expense Tracker',
       theme: ThemeData(
-          primarySwatch: Colors.brown,
-          fontFamily: 'Ubuntu',
-          textTheme: ThemeData.dark().textTheme.copyWith(
-                titleLarge: TextStyle(
-                  fontFamily: 'Ubuntu',
-                  fontWeight: FontWeight.normal,
-                  fontSize: 20,
-                ),
-                bodyLarge: TextStyle(
-                  fontFamily: 'Ubuntu',
-                  fontWeight: FontWeight.bold,
-                  color: Colors.deepOrangeAccent,
-                  fontSize: 18,
-                ),
-                bodyMedium: TextStyle(
-                  fontFamily: 'Ubuntu',
-                  fontWeight: FontWeight.normal,
-                  color: Colors.teal,
-                  fontSize: 18,
-                ),
+        primarySwatch: Colors.brown,
+        fontFamily: 'Ubuntu',
+        textTheme: ThemeData.dark().textTheme.copyWith(
+          titleLarge: TextStyle(
+                fontFamily: 'Ubuntu',
+                fontWeight: FontWeight.normal,
+                fontSize: 20,
               ),
-          appBarTheme: const AppBarTheme(
-              titleTextStyle: TextStyle(
-                  fontFamily: 'Ubuntu',
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold))
-          //colorScheme: ColorScheme.dark(),
-          ),
+          bodyLarge: TextStyle(
+                fontFamily: 'Ubuntu',
+                fontWeight: FontWeight.bold,
+                color: Colors.deepOrangeAccent,
+                fontSize: 18,
+              ),
+          bodyMedium: TextStyle(
+                fontFamily: 'Ubuntu',
+                fontWeight: FontWeight.normal,
+                color: Colors.teal,
+                fontSize: 18,
+              ),
+            ),
+        appBarTheme: const AppBarTheme(
+            titleTextStyle: TextStyle(
+                fontFamily: 'Ubuntu',
+                fontSize: 20,
+                fontWeight: FontWeight.bold)),
+        //colorScheme: ColorScheme.dark(),
+      ),
       home: const MyHomePage(),
     );
   }

@@ -10,11 +10,12 @@ class ChartBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        /*SizedBox(
-          height: 15,
-        ),*/
-        FittedBox(
-            child: Text('\$${dailyExpense.toStringAsFixed(1)}')), // OR Text('${expensePercentage  * 100}%'), To show the daily percentage of all the week expenses
+        Container(
+          height: 20,
+          child: FittedBox(
+              child: Text('\$${dailyExpense.toStringAsFixed(1)}')
+          ),
+        ), // OR Text('${expensePercentage  * 100}%'), To show the daily percentage of all the week expenses
         SizedBox(
           height: 10,
         ),
