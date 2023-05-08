@@ -14,7 +14,7 @@ class _NewTransactionState extends State<NewTransaction> {
   final _titleController = TextEditingController();
 
   final _amountController = TextEditingController();
-  var _selectedDate;
+  double? _selectedDate;
 
   void _submittedTrans() {
     print('in submittedTrans');
