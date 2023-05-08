@@ -29,11 +29,12 @@ class Chart extends StatelessWidget {
 
       return {
         'day': DateFormat.E().format(weekDay).substring(0,1),
+
         'amount': totalExpenses.toStringAsFixed(2),
       };
     }).reversed.toList();
   }
-  
+
   /*datestrings.sort((a, b){ //sorting in ascending order
   return DateTime.parse(a).compareTo(DateTime.parse(b));
   });
@@ -51,11 +52,10 @@ class Chart extends StatelessWidget {
   Widget build(BuildContext context) {
     print(groupedTransactionValues);
     return Container(
-          //width: double.infinity,
           height: 250,
       child: Card(
         elevation: 5,
-          margin: EdgeInsets.all(20),
+        margin: EdgeInsets.all(20),
         child: Container(
           padding: EdgeInsets.all(10),
           child: Row(

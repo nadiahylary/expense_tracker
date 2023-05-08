@@ -19,31 +19,44 @@ class MyApp extends StatelessWidget {
       title: 'Personal Expense Tracker',
       theme: ThemeData(
         primarySwatch: Colors.brown,
-        fontFamily: 'Ubuntu',
+        fontFamily: 'Changa',
         textTheme: ThemeData.dark().textTheme.copyWith(
-          titleLarge: TextStyle(
-                fontFamily: 'Ubuntu',
-                fontWeight: FontWeight.normal,
+              titleLarge: TextStyle(
+                fontFamily: 'Changa',
+                fontWeight: FontWeight.bold,
+                color: Colors.brown,
                 fontSize: 20,
               ),
-          bodyLarge: TextStyle(
-                fontFamily: 'Ubuntu',
+              labelLarge: TextStyle(
+                fontFamily: 'Changa',
                 fontWeight: FontWeight.bold,
+                color: Colors.white,
+                fontSize: 18,
+              ),
+              bodyLarge: TextStyle(
+                fontFamily: 'Changa',
+                fontWeight: FontWeight.w600,
                 color: Colors.deepOrangeAccent,
                 fontSize: 18,
               ),
-          bodyMedium: TextStyle(
-                fontFamily: 'Ubuntu',
+              bodyMedium: TextStyle(
+                fontFamily: 'Changa',
                 fontWeight: FontWeight.normal,
                 color: Colors.teal,
-                fontSize: 18,
+                fontSize: 15,
+              ),
+              titleSmall: TextStyle(
+                fontFamily: 'Changa',
+                fontWeight: FontWeight.w300,
+                color: Colors.teal,
+                fontSize: 13,
               ),
             ),
         appBarTheme: const AppBarTheme(
             titleTextStyle: TextStyle(
-                fontFamily: 'Ubuntu',
+                fontFamily: 'Changa',
                 fontSize: 20,
-                fontWeight: FontWeight.bold)),
+                fontWeight: FontWeight.w800)),
         //colorScheme: ColorScheme.dark(),
       ),
       home: const MyHomePage(),
@@ -80,12 +93,12 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addTransaction(String title, double amount) {
+  void _addTransaction(String title, double amount, DateTime selectedDate) {
     final Transaction transaction = Transaction(
         id: DateTime.now().toString(),
         title: title,
         amount: amount,
-        date: DateTime.now());
+        date: selectedDate);
     setState(() {
       _userTransactions.add(transaction);
     });
@@ -111,6 +124,22 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text("Personal Expense Tracker"),
         backgroundColor: Colors.teal,
+        actions: <Widget>[
+          IconButton(
+            onPressed: () => _displayAddForm(context),
+            icon: Icon(
+              Icons.add,
+              //color: Colors.deepOrangeAccent,
+              size: 30.0,
+            ),
+          ),
+          IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.more_vert,
+                size: 30.0,
+              ))
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -127,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(
           Icons.add,
           //color: Colors.deepOrangeAccent,
-          size: 35.0,
+          size: 30.0,
         ),
       ),
     );

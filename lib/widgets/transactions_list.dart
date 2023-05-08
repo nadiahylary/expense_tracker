@@ -12,7 +12,7 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 350,
+      height: 475,
       child: transactions.isEmpty
           ? Column(
               children: <Widget>[
@@ -44,7 +44,7 @@ class TransactionList extends StatelessWidget {
                       child: Padding(
                           padding: EdgeInsets.all(5),
                           child: FittedBox(
-                              child: Text('\$${transactions[index].amount}')
+                              child: Text('\$${transactions[index].amount}', style: Theme.of(context).textTheme.bodyLarge,)
                           )
                       ),
 
@@ -55,11 +55,7 @@ class TransactionList extends StatelessWidget {
                     ),
                     subtitle: Text(DateFormat.yMMMd()
                         .format(transactions[index].date),
-                        style: TextStyle(
-                          fontWeight: FontWeight.w300,
-                          fontSize: 13,
-                          color: Colors.deepOrangeAccent,
-                        )
+                        style: Theme.of(context).textTheme.titleSmall,
                     ),
                     trailing: IconButton(
                       //color: Colors.deepOrangeAccent,
